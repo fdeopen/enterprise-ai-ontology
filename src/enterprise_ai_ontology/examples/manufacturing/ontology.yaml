@@ -1,0 +1,537 @@
+schema_version: '1.0'
+id: manufacturing
+name: 制造 · 生产与质量闭环
+version: 0.1.0
+industry: 制造
+description: 从客户订单到工单、设备、物料、检验和维护的轻量模型。阈值均为虚构演示配置。
+entities:
+- id: SalesOrder
+  label: 销售订单
+  description: 生产需求来源。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: quantity
+    label: 需求数量
+    description: 需求数量；示例字段定义
+    type: integer
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: due_date
+    label: 交付日期
+    description: 交付日期；示例字段定义
+    type: date
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: WorkOrder
+  label: 生产工单
+  description: 排产、执行和放行的管理单元。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 工单状态
+    description: 工单状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - planned
+    - running
+    - completed
+    unit: null
+    sensitive: false
+  - id: planned_qty
+    label: 计划数量
+    description: 计划数量；示例字段定义
+    type: integer
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: quality_approved
+    label: 质量已放行
+    description: 质量已放行；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: Machine
+  label: 设备
+  description: 设备可用性与当前状态。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 设备状态
+    description: 设备状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - idle
+    - running
+    - maintenance
+    unit: null
+    sensitive: false
+  - id: runtime_hours
+    label: 累计运行时长
+    description: 累计运行时长；示例字段定义
+    type: number
+    required: true
+    nullable: false
+    enum_values: []
+    unit: hour
+    sensitive: false
+  primary_key: id
+- id: MaterialLot
+  label: 物料批次
+  description: 批次追溯与合格状态。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: lot_number
+    label: 批次号
+    description: 批次号；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: quantity
+    label: 批次数量
+    description: 批次数量；示例字段定义
+    type: number
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: qualified
+    label: 来料已合格
+    description: 来料已合格；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: Inspection
+  label: 检验记录
+  description: 检验结论与缺陷描述。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: result
+    label: 检验结论
+    description: 检验结论；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - pass
+    - fail
+    - pending
+    unit: null
+    sensitive: false
+  - id: defects
+    label: 缺陷描述
+    description: 缺陷描述；示例字段定义
+    type: string_list
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: reviewed
+    label: 已复核
+    description: 已复核；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: MaintenanceTicket
+  label: 维护工单
+  description: 设备异常的维修闭环。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 维护状态
+    description: 维护状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - open
+    - in_progress
+    - closed
+    unit: null
+    sensitive: false
+  - id: priority
+    label: 优先级
+    description: 优先级；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - low
+    - medium
+    - high
+    unit: null
+    sensitive: false
+  - id: diagnosis
+    label: 诊断说明
+    description: 诊断说明；示例字段定义
+    type: string
+    required: false
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  primary_key: id
+relationships:
+- id: OrderWorkOrders
+  label: 订单工单
+  description: 订单拆分为工单。
+  source: SalesOrder
+  target: WorkOrder
+  cardinality: one_to_many
+- id: WorkOrderMachine
+  label: 使用设备
+  description: 工单关联主要设备，排产约束由业务系统执行。
+  source: WorkOrder
+  target: Machine
+  cardinality: many_to_one
+- id: WorkOrderMaterials
+  label: 消耗批次
+  description: 批次与工单建立追溯。
+  source: WorkOrder
+  target: MaterialLot
+  cardinality: many_to_many
+- id: WorkOrderInspections
+  label: 工单检验
+  description: 多个检查点形成质量记录。
+  source: WorkOrder
+  target: Inspection
+  cardinality: one_to_many
+- id: MachineMaintenance
+  label: 设备维护
+  description: 设备异常形成维护事项。
+  source: Machine
+  target: MaintenanceTicket
+  cardinality: one_to_many
+actions:
+- id: ReleaseWorkOrder
+  label: 批准工单启动
+  description: 生产负责人检查资源后批准启动。
+  entity: WorkOrder
+  parameters:
+  - id: reason
+    label: 操作原因
+    description: 操作原因；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  requires_rules:
+  - PlannedWorkOrder
+  - PositiveQuantity
+  emits:
+  - WorkOrderReleased
+  human_approval: true
+- id: ApproveInspection
+  label: 复核检验结果
+  description: 质量人员确认测量证据与结论。
+  entity: Inspection
+  parameters:
+  - id: reason
+    label: 操作原因
+    description: 操作原因；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  requires_rules:
+  - InspectionReviewed
+  emits:
+  - InspectionApproved
+  human_approval: true
+- id: ScheduleMaintenance
+  label: 安排设备维护
+  description: 维护负责人确认停机窗口与作业要求。
+  entity: MaintenanceTicket
+  parameters:
+  - id: reason
+    label: 操作原因
+    description: 操作原因；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  requires_rules:
+  - OpenMaintenance
+  emits:
+  - MaintenanceScheduled
+  human_approval: true
+rules:
+- id: PlannedWorkOrder
+  label: 工单待启动
+  description: 只有 planned 工单可以启动。
+  entity: WorkOrder
+  conditions:
+  - property: status
+    operator: eq
+    value: planned
+  match: all
+  severity: error
+  message: 只有 planned 工单可以启动。
+- id: PositiveQuantity
+  label: 计划数量为正
+  description: 计划数量必须为正整数。
+  entity: WorkOrder
+  conditions:
+  - property: planned_qty
+    operator: gt
+    value: 0
+  match: all
+  severity: error
+  message: 计划数量必须为正整数。
+- id: InspectionReviewed
+  label: 检验已复核
+  description: 质量人员必须完成复核。
+  entity: Inspection
+  conditions:
+  - property: reviewed
+    operator: eq
+    value: true
+  match: all
+  severity: error
+  message: 质量人员必须完成复核。
+- id: OpenMaintenance
+  label: 维护单未关闭
+  description: 已关闭维护单不可再次排期。
+  entity: MaintenanceTicket
+  conditions:
+  - property: status
+    operator: ne
+    value: closed
+  match: all
+  severity: error
+  message: 已关闭维护单不可再次排期。
+events:
+- id: WorkOrderReleased
+  label: 工单已放行
+  description: 排产系统可订阅此声明事件。
+  entity: WorkOrder
+  payload:
+  - id: entity_id
+    label: 业务对象标识
+    description: 业务对象标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: occurred_at
+    label: 发生时间
+    description: 发生时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: actor_id
+    label: 操作人标识
+    description: 操作人标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+- id: InspectionApproved
+  label: 检验已批准
+  description: 质量闭环的审核记录。
+  entity: Inspection
+  payload:
+  - id: entity_id
+    label: 业务对象标识
+    description: 业务对象标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: occurred_at
+    label: 发生时间
+    description: 发生时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: actor_id
+    label: 操作人标识
+    description: 操作人标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+- id: MaintenanceScheduled
+  label: 维护已排期
+  description: 通知生产协调人员。
+  entity: MaintenanceTicket
+  payload:
+  - id: entity_id
+    label: 业务对象标识
+    description: 业务对象标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: occurred_at
+    label: 发生时间
+    description: 发生时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: actor_id
+    label: 操作人标识
+    description: 操作人标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+ai_scenarios:
+- id: QualityCopilot
+  label: 质量异常追溯
+  description: 关联缺陷、工单和物料批次，生成证据化原因候选。
+  task: 关联缺陷、工单和物料批次，生成证据化原因候选。
+  entities:
+  - WorkOrder
+  - MaterialLot
+  - Inspection
+  relationships:
+  - WorkOrderMaterials
+  - WorkOrderInspections
+  actions:
+  - ApproveInspection
+  rules:
+  - InspectionReviewed
+  events:
+  - InspectionApproved
+  inputs:
+  - 检验记录
+  - 工艺文档
+  - 批次追溯信息
+  outputs:
+  - 可追溯异常摘要
+  - 根因候选及待验证项
+  success_metrics:
+  - 证据引用准确率
+  - 根因候选人工命中率
+  human_oversight: 质量工程师确认根因与放行决定。
+- id: MaintenanceCopilot
+  label: 设备维护助手
+  description: 结合历史工单和手册生成维护建议。
+  task: 结合历史工单和手册生成维护建议。
+  entities:
+  - Machine
+  - MaintenanceTicket
+  relationships:
+  - MachineMaintenance
+  actions:
+  - ScheduleMaintenance
+  rules:
+  - OpenMaintenance
+  events:
+  - MaintenanceScheduled
+  inputs:
+  - 设备日志摘要
+  - 维护手册
+  - 历史工单
+  outputs:
+  - 维护建议和引用
+  - 所需备件草稿
+  success_metrics:
+  - 建议可执行率
+  - 错误步骤率
+  human_oversight: 合格维护人员确认作业，AI 不直接控制设备。

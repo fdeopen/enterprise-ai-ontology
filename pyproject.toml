@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "enterprise-ai-ontology"
+version = "0.1.0"
+description = "A lightweight, validated enterprise ontology DSL with an offline visual workbench."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "越哥聊AI"}, {name = "Enterprise AI Ontology contributors"}]
+dependencies = ["pydantic>=2.10,<3", "PyYAML>=6.0.2,<7"]
+classifiers = ["Programming Language :: Python :: 3", "Topic :: Software Development :: Libraries :: Python Modules"]
+
+[project.urls]
+Homepage = "https://fdechina.ai/"
+Repository = "https://github.com/fdeopen/enterprise-ai-ontology"
+Documentation = "https://github.com/fdeopen/enterprise-ai-ontology#documentation"
+Issues = "https://github.com/fdeopen/enterprise-ai-ontology/issues"
+
+[project.scripts]
+enterprise-ontology = "enterprise_ai_ontology.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1", "build>=1.2,<2", "jsonschema>=4.23,<5"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/enterprise_ai_ontology"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

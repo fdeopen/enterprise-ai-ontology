@@ -1,0 +1,17 @@
+{
+  "entity": "Quotation",
+  "valid": {
+    "id": "Q-DEMO-001",
+    "status": "reviewed",
+    "amount": 12000,
+    "currency": "USD",
+    "incoterm": "FOB"
+  },
+  "invalid": {
+    "id": "Q-DEMO-002",
+    "status": "draft",
+    "amount": 0,
+    "currency": "USD",
+    "incoterm": "FOB"
+  }
+}

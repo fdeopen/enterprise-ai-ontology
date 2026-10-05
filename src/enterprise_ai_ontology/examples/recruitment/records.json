@@ -1,0 +1,15 @@
+{
+  "entity": "Application",
+  "valid": {
+    "id": "APP-DEMO-001",
+    "stage": "screening",
+    "consent_confirmed": true,
+    "reviewed": true
+  },
+  "invalid": {
+    "id": "APP-DEMO-002",
+    "stage": "screening",
+    "consent_confirmed": false,
+    "reviewed": false
+  }
+}

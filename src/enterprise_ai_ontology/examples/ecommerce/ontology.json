@@ -1,0 +1,744 @@
+{
+  "schema_version": "1.0",
+  "id": "ecommerce",
+  "name": "电商 · 订单与售后",
+  "version": "0.1.0",
+  "industry": "电商",
+  "description": "围绕客户、商品、库存、订单、履约与售后的业务语义。所有数值和规则均为虚构教学示例。",
+  "entities": [
+    {
+      "id": "Customer",
+      "label": "客户",
+      "description": "购买者及其服务偏好。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "name",
+          "label": "客户称呼",
+          "description": "客户称呼；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "tier",
+          "label": "会员等级",
+          "description": "会员等级；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "standard",
+            "premium"
+          ],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "email",
+          "label": "联系邮箱",
+          "description": "联系邮箱；示例字段定义",
+          "type": "string",
+          "required": false,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": true
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "Product",
+      "label": "商品",
+      "description": "可售商品主数据；库存按仓库独立管理。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "sku",
+          "label": "SKU",
+          "description": "SKU；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "name",
+          "label": "商品名称",
+          "description": "商品名称；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "price",
+          "label": "销售单价",
+          "description": "销售单价；示例字段定义",
+          "type": "number",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": "CNY",
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "Inventory",
+      "label": "库存",
+      "description": "商品在某仓库的可用量与预留量。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "warehouse",
+          "label": "仓库标识",
+          "description": "仓库标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "available",
+          "label": "可用数量",
+          "description": "可用数量；示例字段定义",
+          "type": "integer",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "reserved",
+          "label": "预留数量",
+          "description": "预留数量；示例字段定义",
+          "type": "integer",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "Order",
+      "label": "订单",
+      "description": "订单聚合及支付状态；示例仅展示单币种。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "status",
+          "label": "订单状态",
+          "description": "订单状态；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "pending",
+            "paid",
+            "shipped",
+            "cancelled"
+          ],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "total",
+          "label": "订单金额",
+          "description": "订单金额；示例字段定义",
+          "type": "number",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": "CNY",
+          "sensitive": false
+        },
+        {
+          "id": "currency",
+          "label": "币种",
+          "description": "币种；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "CNY"
+          ],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "Shipment",
+      "label": "包裹",
+      "description": "一次履约及物流轨迹。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "carrier",
+          "label": "承运商",
+          "description": "承运商；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "tracking",
+          "label": "物流单号",
+          "description": "物流单号；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "status",
+          "label": "物流状态",
+          "description": "物流状态；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "created",
+            "in_transit",
+            "delivered"
+          ],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "ReturnRequest",
+      "label": "售后申请",
+      "description": "客户发起的售后事项，由客服审核。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "status",
+          "label": "审核状态",
+          "description": "审核状态；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "requested",
+            "approved",
+            "rejected"
+          ],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "reason",
+          "label": "售后原因",
+          "description": "售后原因；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "amount",
+          "label": "申请金额",
+          "description": "申请金额；示例字段定义",
+          "type": "number",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": "CNY",
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "CustomerOrders",
+      "label": "客户下单",
+      "description": "一名客户可以拥有多个订单。",
+      "source": "Customer",
+      "target": "Order",
+      "cardinality": "one_to_many"
+    },
+    {
+      "id": "OrderProducts",
+      "label": "购买商品",
+      "description": "概念关联；生产系统应引入订单行承载单价与数量。",
+      "source": "Order",
+      "target": "Product",
+      "cardinality": "many_to_many"
+    },
+    {
+      "id": "ProductInventory",
+      "label": "商品库存",
+      "description": "一个 SKU 可在多个仓库有库存记录。",
+      "source": "Product",
+      "target": "Inventory",
+      "cardinality": "one_to_many"
+    },
+    {
+      "id": "OrderShipments",
+      "label": "订单履约",
+      "description": "一个订单可拆为多个包裹。",
+      "source": "Order",
+      "target": "Shipment",
+      "cardinality": "one_to_many"
+    },
+    {
+      "id": "OrderReturns",
+      "label": "订单售后",
+      "description": "同一订单可有多次售后申请。",
+      "source": "Order",
+      "target": "ReturnRequest",
+      "cardinality": "one_to_many"
+    },
+    {
+      "id": "CustomerReturns",
+      "label": "发起售后",
+      "description": "关联售后责任客户。",
+      "source": "Customer",
+      "target": "ReturnRequest",
+      "cardinality": "one_to_many"
+    }
+  ],
+  "actions": [
+    {
+      "id": "ShipOrder",
+      "label": "批准发货",
+      "description": "仓库人员确认订单已付款后发起履约。",
+      "entity": "Order",
+      "parameters": [
+        {
+          "id": "reason",
+          "label": "操作原因",
+          "description": "操作原因；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "requires_rules": [
+        "OrderPaid",
+        "PositiveTotal"
+      ],
+      "emits": [
+        "OrderShipped"
+      ],
+      "human_approval": true
+    },
+    {
+      "id": "ApproveReturn",
+      "label": "审核售后",
+      "description": "客服结合订单证据审核售后，不由模型自动退款。",
+      "entity": "ReturnRequest",
+      "parameters": [
+        {
+          "id": "reason",
+          "label": "操作原因",
+          "description": "操作原因；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "requires_rules": [
+        "ReturnRequested"
+      ],
+      "emits": [
+        "ReturnApproved"
+      ],
+      "human_approval": true
+    },
+    {
+      "id": "Replenish",
+      "label": "调整库存",
+      "description": "仓库人员核对盘点结果后更新库存。",
+      "entity": "Inventory",
+      "parameters": [
+        {
+          "id": "reason",
+          "label": "操作原因",
+          "description": "操作原因；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "requires_rules": [
+        "NonnegativeStock"
+      ],
+      "emits": [
+        "StockUpdated"
+      ],
+      "human_approval": true
+    }
+  ],
+  "rules": [
+    {
+      "id": "OrderPaid",
+      "label": "仅已付款可发货",
+      "description": "发货前订单状态应为 paid。",
+      "entity": "Order",
+      "conditions": [
+        {
+          "property": "status",
+          "operator": "eq",
+          "value": "paid"
+        }
+      ],
+      "match": "all",
+      "severity": "error",
+      "message": "发货前订单状态应为 paid。"
+    },
+    {
+      "id": "PositiveTotal",
+      "label": "订单金额为正",
+      "description": "订单金额必须大于零。",
+      "entity": "Order",
+      "conditions": [
+        {
+          "property": "total",
+          "operator": "gt",
+          "value": 0
+        }
+      ],
+      "match": "all",
+      "severity": "error",
+      "message": "订单金额必须大于零。"
+    },
+    {
+      "id": "ReturnRequested",
+      "label": "待审核售后",
+      "description": "仅 requested 状态可进入审核。",
+      "entity": "ReturnRequest",
+      "conditions": [
+        {
+          "property": "status",
+          "operator": "eq",
+          "value": "requested"
+        }
+      ],
+      "match": "all",
+      "severity": "error",
+      "message": "仅 requested 状态可进入审核。"
+    },
+    {
+      "id": "NonnegativeStock",
+      "label": "库存不可为负",
+      "description": "可用库存不能小于零。",
+      "entity": "Inventory",
+      "conditions": [
+        {
+          "property": "available",
+          "operator": "gte",
+          "value": 0
+        }
+      ],
+      "match": "all",
+      "severity": "error",
+      "message": "可用库存不能小于零。"
+    }
+  ],
+  "events": [
+    {
+      "id": "OrderShipped",
+      "label": "订单已发货",
+      "description": "发货后供通知和客服订阅。",
+      "entity": "Order",
+      "payload": [
+        {
+          "id": "entity_id",
+          "label": "业务对象标识",
+          "description": "业务对象标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "occurred_at",
+          "label": "发生时间",
+          "description": "发生时间；示例字段定义",
+          "type": "datetime",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "actor_id",
+          "label": "操作人标识",
+          "description": "操作人标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "id": "ReturnApproved",
+      "label": "售后已批准",
+      "description": "记录审批人及对象标识。",
+      "entity": "ReturnRequest",
+      "payload": [
+        {
+          "id": "entity_id",
+          "label": "业务对象标识",
+          "description": "业务对象标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "occurred_at",
+          "label": "发生时间",
+          "description": "发生时间；示例字段定义",
+          "type": "datetime",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "actor_id",
+          "label": "操作人标识",
+          "description": "操作人标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "id": "StockUpdated",
+      "label": "库存已更新",
+      "description": "供可售判断与补货分析订阅。",
+      "entity": "Inventory",
+      "payload": [
+        {
+          "id": "entity_id",
+          "label": "业务对象标识",
+          "description": "业务对象标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "occurred_at",
+          "label": "发生时间",
+          "description": "发生时间；示例字段定义",
+          "type": "datetime",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "actor_id",
+          "label": "操作人标识",
+          "description": "操作人标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ]
+    }
+  ],
+  "ai_scenarios": [
+    {
+      "id": "SupportCopilot",
+      "label": "售后客服助手",
+      "description": "检索订单、物流及已发布政策，生成带证据的售后建议。",
+      "task": "检索订单、物流及已发布政策，生成带证据的售后建议。",
+      "entities": [
+        "Customer",
+        "Order",
+        "Shipment",
+        "ReturnRequest"
+      ],
+      "relationships": [
+        "CustomerOrders",
+        "OrderShipments",
+        "OrderReturns"
+      ],
+      "actions": [
+        "ApproveReturn"
+      ],
+      "rules": [
+        "ReturnRequested"
+      ],
+      "events": [
+        "ReturnApproved"
+      ],
+      "inputs": [
+        "客户问题",
+        "订单及物流状态",
+        "已审核的售后政策"
+      ],
+      "outputs": [
+        "附引用的答复草稿",
+        "售后审核建议"
+      ],
+      "success_metrics": [
+        "事实引用正确率",
+        "人工采纳率",
+        "错误退款建议率"
+      ],
+      "human_oversight": "客服确认事实和金额后操作，退款由支付系统独立授权。"
+    },
+    {
+      "id": "FulfillmentCopilot",
+      "label": "履约异常分析",
+      "description": "识别订单与库存异常并生成处理队列。",
+      "task": "识别订单与库存异常并生成处理队列。",
+      "entities": [
+        "Order",
+        "Product",
+        "Inventory"
+      ],
+      "relationships": [
+        "OrderProducts",
+        "ProductInventory"
+      ],
+      "actions": [
+        "ShipOrder",
+        "Replenish"
+      ],
+      "rules": [
+        "OrderPaid",
+        "NonnegativeStock"
+      ],
+      "events": [
+        "OrderShipped",
+        "StockUpdated"
+      ],
+      "inputs": [
+        "订单快照",
+        "库存快照"
+      ],
+      "outputs": [
+        "异常原因及处理建议"
+      ],
+      "success_metrics": [
+        "异常检出率",
+        "人工复核通过率"
+      ],
+      "human_oversight": "仓储负责人审批发货和库存调整。"
+    }
+  ]
+}

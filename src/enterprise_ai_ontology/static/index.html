@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#163c39">
+  <title>Enterprise AI Ontology · 业务语义工作台</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script nonce="__NONCE__">window.ONTOLOGY_BOOTSTRAP = __BOOTSTRAP__;</script>
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Ontology 工作台首页"><span class="brand-icon" aria-hidden="true">◈</span><span>ONTOLOGY<span class="brand-sub">ENTERPRISE AI / 业务语义工作台</span></span></a>
+    <div class="top-tools"><span class="mode-badge" id="mode-badge">● LOCAL WORKSPACE</span><button id="import-button" class="button subtle">↑ 导入定义</button><label class="sr-only" for="export-format">导出格式</label><select id="export-format"><option value="yaml">YAML 定义</option><option value="json">JSON 定义</option><option value="html">离线 HTML</option></select><button id="export-button" class="button primary">↓ 导出</button></div>
+    <input id="file-input" class="sr-only" type="file" accept=".json,.yaml,.yml" tabindex="-1">
+  </header>
+  <div class="workspace">
+    <aside class="sidebar">
+      <div class="eyebrow">INDUSTRY LIBRARY <span>05</span></div>
+      <nav id="industry-list" aria-label="行业示例"></nav>
+      <div class="sidebar-divider"></div>
+      <div class="eyebrow">MODEL EXPLORER <span id="object-count"></span></div>
+      <label class="search-wrap"><span aria-hidden="true">⌕</span><input id="search" placeholder="搜索名称或 ID…" aria-label="搜索业务对象"></label>
+      <label class="sr-only" for="kind-filter">对象类型</label><select id="kind-filter"><option value="all">全部业务对象</option><option value="entities">Entity · 实体</option><option value="relationships">Relationship · 关系</option><option value="actions">Action · 动作</option><option value="rules">Rule · 规则</option><option value="events">Event · 事件</option></select>
+      <div id="object-list" class="object-list"></div>
+      <footer class="sidebar-footer"><span class="tiny-dot"></span> DSL 1.0 <span>本地 · 无需 API Key</span></footer>
+    </aside>
+    <main>
+      <section class="model-header"><div class="eyebrow">BUSINESS CONTEXT, CONNECTED.</div><div class="title-row"><h1 id="model-name"></h1><span class="version-pill" id="model-version"></span></div><p id="model-description"></p><div class="stat-row" id="stats"></div></section>
+      <div class="workbench">
+        <div class="canvas-column">
+          <nav class="tabs" aria-label="查看模式"><button data-view="entities" class="active">实体关系</button><button data-view="full">业务全景</button><button data-view="scenarios">AI 场景 <span>02</span></button><button data-view="editor">定义编辑</button><button data-view="check">规则试验</button></nav>
+          <div class="context-strip"><span id="view-description">点击对象查看定义与业务语义</span><button id="clear-focus" hidden>清除场景聚焦 ×</button><span class="valid-badge" id="valid-status">✓ 定义已校验</span></div>
+          <section id="graph-view" class="graph-view" aria-label="交互式业务关系图"><svg id="graph" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="业务实体关系图"></svg><div class="graph-legend"><span><i class="dot entity"></i>实体</span><span><i class="dot action"></i>动作</span><span><i class="dot rule"></i>规则</span><span><i class="dot event"></i>事件</span></div><div class="zoom-tools"><button id="zoom-out" aria-label="缩小图谱">−</button><button id="zoom-reset" aria-label="重置图谱视图">适配</button><button id="zoom-in" aria-label="放大图谱">＋</button></div><span class="graph-hint">滚轮缩放 · 拖动画布 · 点击对象</span><div class="empty-state" id="graph-empty" hidden>没有匹配的对象，请调整搜索条件。</div></section>
+          <section id="scenarios-view" class="content-view" hidden><div class="section-heading"><h2>从业务语义到 AI 应用</h2><p>让每个场景都有清晰的输入、输出、评估指标与人工审核点。</p></div><div id="scenario-list"></div></section>
+          <section id="editor-view" class="content-view" hidden><div class="section-heading"><h2>定义即文档</h2><p>修改后点击“校验并应用”，通过后会更新图谱。导出仅包含已通过校验的版本。</p></div><div class="editor-toolbar"><label for="editor-format">格式</label><select id="editor-format"><option value="yaml">YAML</option><option value="json">JSON</option></select><button id="apply-editor" class="button primary">校验并应用</button><button id="reset-editor" class="button subtle">恢复当前定义</button></div><label class="sr-only" for="definition-editor">Ontology 定义源码</label><textarea id="definition-editor" spellcheck="false"></textarea><pre id="editor-result" class="result-box" aria-live="polite">编辑器已就绪。</pre></section>
+          <section id="check-view" class="content-view" hidden><div class="section-heading"><h2>让业务规则可验证</h2><p>选择一个实体，填写单条 JSON 记录。这里只检查数据与规则，不执行动作。</p></div><div class="editor-toolbar"><label for="record-entity">实体</label><select id="record-entity"></select><button id="check-record" class="button primary">检查记录</button></div><label class="sr-only" for="record-editor">JSON 记录</label><textarea id="record-editor" spellcheck="false"></textarea><pre id="record-result" class="result-box" aria-live="polite">示例值由字段类型生成，请按业务实际填写。</pre></section>
+        </div>
+        <aside id="inspector" class="inspector" aria-label="对象详情"></aside>
+      </div>
+      <footer class="main-footer"><span>ENTERPRISE AI ONTOLOGY <b>/</b> 让业务成为 AI 可以理解的语言</span><span id="footer-note">修改仅保留在当前页面，请导出保存。</span></footer>
+    </main>
+  </div>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

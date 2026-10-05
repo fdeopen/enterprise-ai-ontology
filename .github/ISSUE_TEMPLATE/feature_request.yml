@@ -1,0 +1,23 @@
+name: Feature or industry model / 功能或行业模型
+description: Propose a focused improvement / 说明具体业务需求与改进建议
+title: "[Proposal] "
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Business problem / 业务问题
+      description: Who needs this, and what are they trying to accomplish?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior / 期望能力
+      description: Include a small example. For industry models, describe entities, actions, and AI scenarios.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and compatibility / 替代方案与兼容性
+      description: Existing workarounds, affected DSL definitions, or migration implications.

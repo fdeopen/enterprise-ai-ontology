@@ -1,0 +1,544 @@
+schema_version: '1.0'
+id: medical_aesthetics
+name: 医美 · 咨询与服务协同
+version: 0.1.0
+industry: 医美
+description: 仅用于预约、资料整理、知情确认和随访任务的业务建模，不提供诊断、治疗参数或自动临床决策。
+entities:
+- id: Client
+  label: 服务客户
+  description: 经授权使用的基础资料与联系偏好。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: alias
+    label: 客户代号
+    description: 客户代号；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: contact_consent
+    label: 联系授权
+    description: 联系授权；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: contact
+    label: 联系方式
+    description: 联系方式；示例字段定义
+    type: string
+    required: false
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: true
+  primary_key: id
+- id: Consultation
+  label: 咨询记录
+  description: 客户诉求与人员复核状态。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: concern
+    label: 咨询诉求
+    description: 咨询诉求；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: true
+  - id: reviewed
+    label: 专业人员已复核
+    description: 专业人员已复核；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 咨询状态
+    description: 咨询状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - draft
+    - reviewed
+    - closed
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: Practitioner
+  label: 专业人员
+  description: 执业信息仅存核验状态，具体资格由机构核实。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: name
+    label: 姓名
+    description: 姓名；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: qualification_verified
+    label: 资格已核验
+    description: 资格已核验；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: ServicePlan
+  label: 服务计划
+  description: 经过专业人员审核的计划摘要。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 计划状态
+    description: 计划状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - draft
+    - reviewed
+    - confirmed
+    unit: null
+    sensitive: false
+  - id: consent_confirmed
+    label: 知情确认已记录
+    description: 知情确认已记录；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: summary
+    label: 计划摘要
+    description: 计划摘要；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: true
+  primary_key: id
+- id: Appointment
+  label: 预约
+  description: 时间、责任人员与预约状态。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: scheduled_at
+    label: 预约时间
+    description: 预约时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 预约状态
+    description: 预约状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - requested
+    - confirmed
+    - completed
+    - cancelled
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: FollowUp
+  label: 随访任务
+  description: 服务后的联系与异常转交。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 随访状态
+    description: 随访状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - pending
+    - contacted
+    - escalated
+    - closed
+    unit: null
+    sensitive: false
+  - id: needs_review
+    label: 需专业人员复核
+    description: 需专业人员复核；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: note
+    label: 随访记录
+    description: 随访记录；示例字段定义
+    type: string
+    required: false
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: true
+  primary_key: id
+relationships:
+- id: ClientConsultations
+  label: 客户咨询
+  description: 客户可有多次咨询。
+  source: Client
+  target: Consultation
+  cardinality: one_to_many
+- id: ConsultationPractitioner
+  label: 复核人员
+  description: 明确专业复核责任。
+  source: Consultation
+  target: Practitioner
+  cardinality: many_to_one
+- id: ConsultationPlans
+  label: 咨询计划
+  description: 咨询关联多个计划版本。
+  source: Consultation
+  target: ServicePlan
+  cardinality: one_to_many
+- id: PlanAppointments
+  label: 计划预约
+  description: 确认后的服务安排。
+  source: ServicePlan
+  target: Appointment
+  cardinality: one_to_many
+- id: ClientFollowUps
+  label: 客户随访
+  description: 跟踪服务沟通事项。
+  source: Client
+  target: FollowUp
+  cardinality: one_to_many
+- id: AppointmentPractitioner
+  label: 预约人员
+  description: 关联服务责任人员。
+  source: Appointment
+  target: Practitioner
+  cardinality: many_to_one
+actions:
+- id: ConfirmPlan
+  label: 确认已审计划
+  description: 专业人员确认计划与知情记录后，由授权人员登记。
+  entity: ServicePlan
+  parameters:
+  - id: reason
+    label: 操作原因
+    description: 操作原因；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  requires_rules:
+  - PlanReviewed
+  - ConsentRecorded
+  emits:
+  - PlanConfirmed
+  human_approval: true
+- id: ConfirmAppointment
+  label: 确认预约
+  description: 预约人员确认资源和客户意愿。
+  entity: Appointment
+  parameters:
+  - id: reason
+    label: 操作原因
+    description: 操作原因；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  requires_rules:
+  - AppointmentRequested
+  emits:
+  - AppointmentConfirmed
+  human_approval: true
+- id: EscalateFollowUp
+  label: 转交专业复核
+  description: 将需要关注的反馈交由专业人员处理。
+  entity: FollowUp
+  parameters:
+  - id: reason
+    label: 操作原因
+    description: 操作原因；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  requires_rules:
+  - ReviewNeeded
+  emits:
+  - FollowUpEscalated
+  human_approval: true
+rules:
+- id: PlanReviewed
+  label: 计划已审核
+  description: 计划必须先由专业人员审核。
+  entity: ServicePlan
+  conditions:
+  - property: status
+    operator: eq
+    value: reviewed
+  match: all
+  severity: error
+  message: 计划必须先由专业人员审核。
+- id: ConsentRecorded
+  label: 知情记录齐全
+  description: 记录知情确认状态，不以 AI 输出代替告知过程。
+  entity: ServicePlan
+  conditions:
+  - property: consent_confirmed
+    operator: eq
+    value: true
+  match: all
+  severity: error
+  message: 记录知情确认状态，不以 AI 输出代替告知过程。
+- id: AppointmentRequested
+  label: 预约待确认
+  description: 预约应处于 requested 状态。
+  entity: Appointment
+  conditions:
+  - property: status
+    operator: eq
+    value: requested
+  match: all
+  severity: error
+  message: 预约应处于 requested 状态。
+- id: ReviewNeeded
+  label: 需要专业复核
+  description: 标记需专业复核后转交。
+  entity: FollowUp
+  conditions:
+  - property: needs_review
+    operator: eq
+    value: true
+  match: all
+  severity: error
+  message: 标记需专业复核后转交。
+events:
+- id: PlanConfirmed
+  label: 计划已确认
+  description: 记录确认对象与操作人员。
+  entity: ServicePlan
+  payload:
+  - id: entity_id
+    label: 业务对象标识
+    description: 业务对象标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: occurred_at
+    label: 发生时间
+    description: 发生时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: actor_id
+    label: 操作人标识
+    description: 操作人标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+- id: AppointmentConfirmed
+  label: 预约已确认
+  description: 供服务通知使用。
+  entity: Appointment
+  payload:
+  - id: entity_id
+    label: 业务对象标识
+    description: 业务对象标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: occurred_at
+    label: 发生时间
+    description: 发生时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: actor_id
+    label: 操作人标识
+    description: 操作人标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+- id: FollowUpEscalated
+  label: 随访已转交
+  description: 形成可追踪的人工处理任务。
+  entity: FollowUp
+  payload:
+  - id: entity_id
+    label: 业务对象标识
+    description: 业务对象标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: occurred_at
+    label: 发生时间
+    description: 发生时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: actor_id
+    label: 操作人标识
+    description: 操作人标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+ai_scenarios:
+- id: ConsultationAssistant
+  label: 咨询资料整理
+  description: 从经授权的咨询文本中整理诉求、缺失资料和待确认问题。
+  task: 从经授权的咨询文本中整理诉求、缺失资料和待确认问题。
+  entities:
+  - Client
+  - Consultation
+  - Practitioner
+  - ServicePlan
+  relationships:
+  - ClientConsultations
+  - ConsultationPractitioner
+  - ConsultationPlans
+  actions:
+  - ConfirmPlan
+  rules:
+  - PlanReviewed
+  - ConsentRecorded
+  events:
+  - PlanConfirmed
+  inputs:
+  - 经授权咨询记录
+  - 机构已审核说明资料
+  outputs:
+  - 资料摘要
+  - 待专业人员确认的问题
+  success_metrics:
+  - 摘要事实一致率
+  - 敏感信息最小化通过率
+  - 人工修订率
+  human_oversight: 专业人员审核内容与计划；AI 不诊断、不推荐治疗参数。
+- id: FollowUpAssistant
+  label: 随访任务分流
+  description: 整理服务反馈并提示需要人工阅读的事项。
+  task: 整理服务反馈并提示需要人工阅读的事项。
+  entities:
+  - Client
+  - FollowUp
+  relationships:
+  - ClientFollowUps
+  actions:
+  - EscalateFollowUp
+  rules:
+  - ReviewNeeded
+  events:
+  - FollowUpEscalated
+  inputs:
+  - 客户授权反馈
+  - 机构随访流程
+  outputs:
+  - 反馈摘要
+  - 待人工处理队列
+  success_metrics:
+  - 需人工处理事项漏检率
+  - 转交及时率
+  human_oversight: 异常反馈交由专业人员处理，紧急处置遵循机构流程。

@@ -1,0 +1,35 @@
+name: Bug report / 问题报告
+description: Report a reproducible defect / 提交可复现的问题
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "Use fictional data. For vulnerabilities, read SECURITY.md first. / 请使用虚构数据；漏洞报告请先阅读 SECURITY.md。"
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 运行环境
+      description: OS, Python version, toolkit version or commit, installation method.
+      placeholder: "macOS / Python 3.12 / enterprise-ontology --version / uv sync --locked"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction / 最小复现
+      description: Include commands and a small JSON or YAML definition when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior / 预期结果
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior / 实际结果
+      description: Include relevant output or screenshots, with sensitive details removed.
+    validations:
+      required: true

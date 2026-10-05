@@ -1,0 +1,15 @@
+{
+  "entity": "ServicePlan",
+  "valid": {
+    "id": "PLAN-DEMO-001",
+    "status": "reviewed",
+    "consent_confirmed": true,
+    "summary": "虚构服务计划摘要"
+  },
+  "invalid": {
+    "id": "PLAN-DEMO-002",
+    "status": "draft",
+    "consent_confirmed": false,
+    "summary": "待审核草稿"
+  }
+}

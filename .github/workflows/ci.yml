@@ -1,0 +1,23 @@
+name: Test and build
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --group dev
+      - run: uv run pytest -q
+      - run: uv run ruff check src tests
+      - run: uv run ruff format --check src tests
+      - run: uv run python -m build

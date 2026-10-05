@@ -1,0 +1,15 @@
+{
+  "entity": "Order",
+  "valid": {
+    "id": "ORD-DEMO-001",
+    "status": "paid",
+    "total": 299.0,
+    "currency": "CNY"
+  },
+  "invalid": {
+    "id": "ORD-DEMO-002",
+    "status": "pending",
+    "total": -1.0,
+    "currency": "CNY"
+  }
+}

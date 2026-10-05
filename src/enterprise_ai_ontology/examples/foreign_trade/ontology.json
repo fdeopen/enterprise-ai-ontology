@@ -1,0 +1,750 @@
+{
+  "schema_version": "1.0",
+  "id": "foreign_trade",
+  "name": "外贸 · 从询盘到出运",
+  "version": "0.1.0",
+  "industry": "外贸",
+  "description": "描述海外客户、询盘、报价、销售合同、出运和贸易单据。条款仅为示意，不代表真实贸易或法律意见。",
+  "entities": [
+    {
+      "id": "Buyer",
+      "label": "海外客户",
+      "description": "客户组织及目标市场。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "company",
+          "label": "公司名称",
+          "description": "公司名称；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "market",
+          "label": "目标市场",
+          "description": "目标市场；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "contact",
+          "label": "联系人",
+          "description": "联系人；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": true
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "Inquiry",
+      "label": "询盘",
+      "description": "客户需求与产品规格。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "specification",
+          "label": "产品规格",
+          "description": "产品规格；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "quantity",
+          "label": "采购数量",
+          "description": "采购数量；示例字段定义",
+          "type": "integer",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "due_date",
+          "label": "期望回复日",
+          "description": "期望回复日；示例字段定义",
+          "type": "date",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "Quotation",
+      "label": "报价",
+      "description": "含币种和有效期的报价版本。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "status",
+          "label": "报价状态",
+          "description": "报价状态；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "draft",
+            "reviewed",
+            "sent"
+          ],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "amount",
+          "label": "报价总额",
+          "description": "报价总额；示例字段定义",
+          "type": "number",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "currency",
+          "label": "币种",
+          "description": "币种；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "USD",
+            "EUR",
+            "CNY"
+          ],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "incoterm",
+          "label": "贸易术语",
+          "description": "贸易术语；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "FOB",
+            "CIF",
+            "DAP"
+          ],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "Contract",
+      "label": "销售合同",
+      "description": "双方确认的订单承诺。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "status",
+          "label": "合同状态",
+          "description": "合同状态；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "draft",
+            "signed",
+            "closed"
+          ],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "payment_terms",
+          "label": "付款条款",
+          "description": "付款条款；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "delivery_date",
+          "label": "承诺交期",
+          "description": "承诺交期；示例字段定义",
+          "type": "date",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "Shipment",
+      "label": "出运",
+      "description": "合同项下的一次运输计划。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "status",
+          "label": "出运状态",
+          "description": "出运状态；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "planned",
+            "booked",
+            "departed"
+          ],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "destination",
+          "label": "目的港",
+          "description": "目的港；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "booking_ref",
+          "label": "订舱号",
+          "description": "订舱号；示例字段定义",
+          "type": "string",
+          "required": false,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    },
+    {
+      "id": "TradeDocument",
+      "label": "贸易单据",
+      "description": "用于出运协作的单据及复核状态。",
+      "properties": [
+        {
+          "id": "id",
+          "label": "唯一标识",
+          "description": "唯一标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "kind",
+          "label": "单据类型",
+          "description": "单据类型；示例字段定义",
+          "type": "enum",
+          "required": true,
+          "nullable": false,
+          "enum_values": [
+            "invoice",
+            "packing_list",
+            "bill_of_lading"
+          ],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "reviewed",
+          "label": "已人工复核",
+          "description": "已人工复核；示例字段定义",
+          "type": "boolean",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "reference",
+          "label": "单据编号",
+          "description": "单据编号；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "primary_key": "id"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "BuyerInquiries",
+      "label": "客户询盘",
+      "description": "客户提交采购需求。",
+      "source": "Buyer",
+      "target": "Inquiry",
+      "cardinality": "one_to_many"
+    },
+    {
+      "id": "InquiryQuotes",
+      "label": "询盘报价",
+      "description": "多次报价对应同一需求。",
+      "source": "Inquiry",
+      "target": "Quotation",
+      "cardinality": "one_to_many"
+    },
+    {
+      "id": "QuoteContracts",
+      "label": "报价转合同",
+      "description": "经确认的报价可形成合同。",
+      "source": "Quotation",
+      "target": "Contract",
+      "cardinality": "one_to_many"
+    },
+    {
+      "id": "ContractShipments",
+      "label": "合同出运",
+      "description": "合同可分批交付。",
+      "source": "Contract",
+      "target": "Shipment",
+      "cardinality": "one_to_many"
+    },
+    {
+      "id": "ShipmentDocuments",
+      "label": "出运单据",
+      "description": "每次出运关联多类单据。",
+      "source": "Shipment",
+      "target": "TradeDocument",
+      "cardinality": "one_to_many"
+    }
+  ],
+  "actions": [
+    {
+      "id": "SendQuotation",
+      "label": "发送已审报价",
+      "description": "业务员复核价格、术语和币种后发送。",
+      "entity": "Quotation",
+      "parameters": [
+        {
+          "id": "reason",
+          "label": "操作原因",
+          "description": "操作原因；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "requires_rules": [
+        "QuoteReviewed",
+        "PositiveQuote"
+      ],
+      "emits": [
+        "QuotationSent"
+      ],
+      "human_approval": true
+    },
+    {
+      "id": "BookShipment",
+      "label": "申请订舱",
+      "description": "履约人员按已签合同申请订舱。",
+      "entity": "Contract",
+      "parameters": [
+        {
+          "id": "reason",
+          "label": "操作原因",
+          "description": "操作原因；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "requires_rules": [
+        "ContractSigned"
+      ],
+      "emits": [
+        "BookingRequested"
+      ],
+      "human_approval": true
+    },
+    {
+      "id": "ReleaseDocument",
+      "label": "放行贸易单据",
+      "description": "单证员确认事实及一致性后放行。",
+      "entity": "TradeDocument",
+      "parameters": [
+        {
+          "id": "reason",
+          "label": "操作原因",
+          "description": "操作原因；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ],
+      "requires_rules": [
+        "DocumentReviewed"
+      ],
+      "emits": [
+        "DocumentReleased"
+      ],
+      "human_approval": true
+    }
+  ],
+  "rules": [
+    {
+      "id": "QuoteReviewed",
+      "label": "报价已复核",
+      "description": "报价须 reviewed 后方可发送。",
+      "entity": "Quotation",
+      "conditions": [
+        {
+          "property": "status",
+          "operator": "eq",
+          "value": "reviewed"
+        }
+      ],
+      "match": "all",
+      "severity": "error",
+      "message": "报价须 reviewed 后方可发送。"
+    },
+    {
+      "id": "PositiveQuote",
+      "label": "报价金额为正",
+      "description": "报价金额必须大于零。",
+      "entity": "Quotation",
+      "conditions": [
+        {
+          "property": "amount",
+          "operator": "gt",
+          "value": 0
+        }
+      ],
+      "match": "all",
+      "severity": "error",
+      "message": "报价金额必须大于零。"
+    },
+    {
+      "id": "ContractSigned",
+      "label": "合同已签署",
+      "description": "须确认合同签署状态。",
+      "entity": "Contract",
+      "conditions": [
+        {
+          "property": "status",
+          "operator": "eq",
+          "value": "signed"
+        }
+      ],
+      "match": "all",
+      "severity": "error",
+      "message": "须确认合同签署状态。"
+    },
+    {
+      "id": "DocumentReviewed",
+      "label": "单据人工复核",
+      "description": "单据需要人工复核。",
+      "entity": "TradeDocument",
+      "conditions": [
+        {
+          "property": "reviewed",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "match": "all",
+      "severity": "error",
+      "message": "单据需要人工复核。"
+    }
+  ],
+  "events": [
+    {
+      "id": "QuotationSent",
+      "label": "报价已发送",
+      "description": "记录报价版本。",
+      "entity": "Quotation",
+      "payload": [
+        {
+          "id": "entity_id",
+          "label": "业务对象标识",
+          "description": "业务对象标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "occurred_at",
+          "label": "发生时间",
+          "description": "发生时间；示例字段定义",
+          "type": "datetime",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "actor_id",
+          "label": "操作人标识",
+          "description": "操作人标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "id": "BookingRequested",
+      "label": "订舱已申请",
+      "description": "通知履约协调人员。",
+      "entity": "Contract",
+      "payload": [
+        {
+          "id": "entity_id",
+          "label": "业务对象标识",
+          "description": "业务对象标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "occurred_at",
+          "label": "发生时间",
+          "description": "发生时间；示例字段定义",
+          "type": "datetime",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "actor_id",
+          "label": "操作人标识",
+          "description": "操作人标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "id": "DocumentReleased",
+      "label": "单据已放行",
+      "description": "记录单据审核结果。",
+      "entity": "TradeDocument",
+      "payload": [
+        {
+          "id": "entity_id",
+          "label": "业务对象标识",
+          "description": "业务对象标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "occurred_at",
+          "label": "发生时间",
+          "description": "发生时间；示例字段定义",
+          "type": "datetime",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        },
+        {
+          "id": "actor_id",
+          "label": "操作人标识",
+          "description": "操作人标识；示例字段定义",
+          "type": "string",
+          "required": true,
+          "nullable": false,
+          "enum_values": [],
+          "unit": null,
+          "sensitive": false
+        }
+      ]
+    }
+  ],
+  "ai_scenarios": [
+    {
+      "id": "InquiryCopilot",
+      "label": "多语言询盘助手",
+      "description": "提取询盘中的规格、数量和交期，生成待审报价草稿。",
+      "task": "提取询盘中的规格、数量和交期，生成待审报价草稿。",
+      "entities": [
+        "Buyer",
+        "Inquiry",
+        "Quotation"
+      ],
+      "relationships": [
+        "BuyerInquiries",
+        "InquiryQuotes"
+      ],
+      "actions": [
+        "SendQuotation"
+      ],
+      "rules": [
+        "QuoteReviewed",
+        "PositiveQuote"
+      ],
+      "events": [
+        "QuotationSent"
+      ],
+      "inputs": [
+        "客户邮件",
+        "商品目录",
+        "已授权价格表"
+      ],
+      "outputs": [
+        "结构化询盘",
+        "报价草稿及缺失信息"
+      ],
+      "success_metrics": [
+        "关键字段准确率",
+        "币种错误率",
+        "人工修订量"
+      ],
+      "human_oversight": "业务员确认报价，AI 不承诺价格或交期。"
+    },
+    {
+      "id": "DocumentCopilot",
+      "label": "单证一致性助手",
+      "description": "比对合同、出运计划和单据字段，标记疑点。",
+      "task": "比对合同、出运计划和单据字段，标记疑点。",
+      "entities": [
+        "Contract",
+        "Shipment",
+        "TradeDocument"
+      ],
+      "relationships": [
+        "ContractShipments",
+        "ShipmentDocuments"
+      ],
+      "actions": [
+        "ReleaseDocument"
+      ],
+      "rules": [
+        "DocumentReviewed"
+      ],
+      "events": [
+        "DocumentReleased"
+      ],
+      "inputs": [
+        "合同字段",
+        "出运计划",
+        "单据文本"
+      ],
+      "outputs": [
+        "不一致清单及出处"
+      ],
+      "success_metrics": [
+        "差异召回率",
+        "错误放行建议率"
+      ],
+      "human_oversight": "单证员和相关专业人员完成最终复核。"
+    }
+  ]
+}

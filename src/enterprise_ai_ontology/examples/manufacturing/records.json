@@ -1,0 +1,15 @@
+{
+  "entity": "WorkOrder",
+  "valid": {
+    "id": "WO-DEMO-001",
+    "status": "planned",
+    "planned_qty": 100,
+    "quality_approved": false
+  },
+  "invalid": {
+    "id": "WO-DEMO-002",
+    "status": "completed",
+    "planned_qty": 0,
+    "quality_approved": true
+  }
+}

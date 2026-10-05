@@ -1,0 +1,567 @@
+schema_version: '1.0'
+id: recruitment
+name: 招聘 · 人岗协作流程
+version: 0.1.0
+industry: 招聘
+description: 以岗位要求、候选人授权、申请、面试证据和人工决策为中心。不以敏感个人属性进行自动筛选或录用。
+entities:
+- id: Job
+  label: 岗位
+  description: 结构化的业务职责与能力要求。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: title
+    label: 岗位名称
+    description: 岗位名称；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: required_skills
+    label: 必需技能
+    description: 必需技能；示例字段定义
+    type: string_list
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 岗位状态
+    description: 岗位状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - draft
+    - open
+    - closed
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: Candidate
+  label: 候选人
+  description: 经授权处理的求职资料。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: alias
+    label: 候选人代号
+    description: 候选人代号；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: skills
+    label: 技能
+    description: 技能；示例字段定义
+    type: string_list
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: processing_consent
+    label: 资料处理授权
+    description: 资料处理授权；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: email
+    label: 联系邮箱
+    description: 联系邮箱；示例字段定义
+    type: string
+    required: false
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: true
+  primary_key: id
+- id: Application
+  label: 职位申请
+  description: 连接候选人与岗位的评估过程。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: stage
+    label: 申请阶段
+    description: 申请阶段；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - submitted
+    - screening
+    - interview
+    - offer
+    - closed
+    unit: null
+    sensitive: false
+  - id: consent_confirmed
+    label: 授权已确认
+    description: 授权已确认；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: reviewed
+    label: 人工已复核
+    description: 人工已复核；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: Interview
+  label: 面试
+  description: 围绕岗位能力的面试安排与事实记录。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: scheduled_at
+    label: 面试时间
+    description: 面试时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 面试状态
+    description: 面试状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - planned
+    - completed
+    - cancelled
+    unit: null
+    sensitive: false
+  - id: evidence
+    label: 能力证据摘要
+    description: 能力证据摘要；示例字段定义
+    type: string
+    required: false
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: true
+  primary_key: id
+- id: Evaluation
+  label: 能力评估
+  description: 基于预先定义的岗位标准，保留证据与复核状态。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: criterion
+    label: 评估维度
+    description: 评估维度；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: evidence
+    label: 证据出处
+    description: 证据出处；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: true
+  - id: reviewed
+    label: 已人工复核
+    description: 已人工复核；示例字段定义
+    type: boolean
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  primary_key: id
+- id: Offer
+  label: 录用方案
+  description: 由授权人员批准的录用条款草案。
+  properties:
+  - id: id
+    label: 唯一标识
+    description: 唯一标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: status
+    label: 方案状态
+    description: 方案状态；示例字段定义
+    type: enum
+    required: true
+    nullable: false
+    enum_values:
+    - draft
+    - approved
+    - sent
+    - accepted
+    unit: null
+    sensitive: false
+  - id: role_title
+    label: 岗位名称
+    description: 岗位名称；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: approved_by
+    label: 批准人标识
+    description: 批准人标识；示例字段定义
+    type: string
+    required: false
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  primary_key: id
+relationships:
+- id: JobApplications
+  label: 岗位申请
+  description: 岗位接收多个申请。
+  source: Job
+  target: Application
+  cardinality: one_to_many
+- id: CandidateApplications
+  label: 候选申请
+  description: 候选人可申请多个岗位。
+  source: Candidate
+  target: Application
+  cardinality: one_to_many
+- id: ApplicationInterviews
+  label: 申请面试
+  description: 面试过程保留多个轮次。
+  source: Application
+  target: Interview
+  cardinality: one_to_many
+- id: InterviewEvaluations
+  label: 面试评估
+  description: 评估按岗位能力维度组织。
+  source: Interview
+  target: Evaluation
+  cardinality: one_to_many
+- id: ApplicationOffers
+  label: 申请方案
+  description: 保留方案版本，不代表自动录用。
+  source: Application
+  target: Offer
+  cardinality: one_to_many
+actions:
+- id: AdvanceApplication
+  label: 推进申请阶段
+  description: 招聘人员核对岗位证据后推进阶段；不自动淘汰候选人。
+  entity: Application
+  parameters:
+  - id: reason
+    label: 操作原因
+    description: 操作原因；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  requires_rules:
+  - ConsentConfirmed
+  - ApplicationReviewed
+  emits:
+  - ApplicationAdvanced
+  human_approval: true
+- id: FinalizeEvaluation
+  label: 确认能力评估
+  description: 面试官复核证据并确认评估。
+  entity: Evaluation
+  parameters:
+  - id: reason
+    label: 操作原因
+    description: 操作原因；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  requires_rules:
+  - EvaluationReviewed
+  emits:
+  - EvaluationFinalized
+  human_approval: true
+- id: SendOffer
+  label: 发送已批方案
+  description: 授权招聘人员确认批准记录后发送方案。
+  entity: Offer
+  parameters:
+  - id: reason
+    label: 操作原因
+    description: 操作原因；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  requires_rules:
+  - OfferApproved
+  emits:
+  - OfferSent
+  human_approval: true
+rules:
+- id: ConsentConfirmed
+  label: 资料授权已确认
+  description: 处理申请前应确认资料使用授权。
+  entity: Application
+  conditions:
+  - property: consent_confirmed
+    operator: eq
+    value: true
+  match: all
+  severity: error
+  message: 处理申请前应确认资料使用授权。
+- id: ApplicationReviewed
+  label: 阶段推进需人工复核
+  description: 申请阶段变更需要招聘人员复核。
+  entity: Application
+  conditions:
+  - property: reviewed
+    operator: eq
+    value: true
+  match: all
+  severity: error
+  message: 申请阶段变更需要招聘人员复核。
+- id: EvaluationReviewed
+  label: 评估已复核
+  description: 能力评估由面试官确认。
+  entity: Evaluation
+  conditions:
+  - property: reviewed
+    operator: eq
+    value: true
+  match: all
+  severity: error
+  message: 能力评估由面试官确认。
+- id: OfferApproved
+  label: 录用方案已批准
+  description: 发送前方案须 approved。
+  entity: Offer
+  conditions:
+  - property: status
+    operator: eq
+    value: approved
+  match: all
+  severity: error
+  message: 发送前方案须 approved。
+events:
+- id: ApplicationAdvanced
+  label: 申请阶段已更新
+  description: 记录阶段变更操作。
+  entity: Application
+  payload:
+  - id: entity_id
+    label: 业务对象标识
+    description: 业务对象标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: occurred_at
+    label: 发生时间
+    description: 发生时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: actor_id
+    label: 操作人标识
+    description: 操作人标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+- id: EvaluationFinalized
+  label: 能力评估已确认
+  description: 供招聘协作读取。
+  entity: Evaluation
+  payload:
+  - id: entity_id
+    label: 业务对象标识
+    description: 业务对象标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: occurred_at
+    label: 发生时间
+    description: 发生时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: actor_id
+    label: 操作人标识
+    description: 操作人标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+- id: OfferSent
+  label: 录用方案已发送
+  description: 记录方案版本与发送责任人。
+  entity: Offer
+  payload:
+  - id: entity_id
+    label: 业务对象标识
+    description: 业务对象标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: occurred_at
+    label: 发生时间
+    description: 发生时间；示例字段定义
+    type: datetime
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+  - id: actor_id
+    label: 操作人标识
+    description: 操作人标识；示例字段定义
+    type: string
+    required: true
+    nullable: false
+    enum_values: []
+    unit: null
+    sensitive: false
+ai_scenarios:
+- id: EvidenceAssistant
+  label: 岗位能力证据助手
+  description: 从授权简历中提取与岗位技能相关的证据和待确认项。
+  task: 从授权简历中提取与岗位技能相关的证据和待确认项。
+  entities:
+  - Job
+  - Candidate
+  - Application
+  relationships:
+  - JobApplications
+  - CandidateApplications
+  actions:
+  - AdvanceApplication
+  rules:
+  - ConsentConfirmed
+  - ApplicationReviewed
+  events:
+  - ApplicationAdvanced
+  inputs:
+  - 授权简历
+  - 岗位职责与能力标准
+  outputs:
+  - 能力证据与原文出处
+  - 待面试确认问题
+  success_metrics:
+  - 证据引用准确率
+  - 人工纠错率
+  - 敏感属性泄漏率
+  human_oversight: 招聘人员逐项复核；不得以 AI 单独作出淘汰或录用决定。
+- id: InterviewAssistant
+  label: 面试纪要助手
+  description: 把授权面试记录映射到统一能力维度，标记证据缺口。
+  task: 把授权面试记录映射到统一能力维度，标记证据缺口。
+  entities:
+  - Application
+  - Interview
+  - Evaluation
+  relationships:
+  - ApplicationInterviews
+  - InterviewEvaluations
+  actions:
+  - FinalizeEvaluation
+  rules:
+  - EvaluationReviewed
+  events:
+  - EvaluationFinalized
+  inputs:
+  - 授权面试记录
+  - 统一岗位评估量表
+  outputs:
+  - 事实纪要
+  - 能力维度证据表
+  success_metrics:
+  - 事实一致率
+  - 无证据结论比例
+  - 面试官修订量
+  human_oversight: 面试官确认事实和评估，不推断未提供的个人特征。
